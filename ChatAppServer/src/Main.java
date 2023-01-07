@@ -1,5 +1,8 @@
+import view.ServerHomeView;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        ServerHomeView view = new ServerHomeView();
+        view.show();
     }
 }
