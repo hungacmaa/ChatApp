@@ -1,9 +1,13 @@
 package view;
 
+import enums.ViewAction;
 import model.RequestObject;
 import model.ResponseObject;
 
+import java.io.IOException;
+
 public class ServerHomeView {
+
     private RequestObject request = null;
     private ResponseObject response = null;
 
@@ -17,7 +21,27 @@ public class ServerHomeView {
         if (this.response == null) this.response = response;
     }
 
-    public void show() {
-        System.out.println("D A N G        M O         S E R V E R !!!!!!!!!");
+    public void start(){
+
+    }
+    public void show(ViewAction a) {
+        switch (a) {
+            case MSG: {
+                // Handle
+                break;
+            }
+            case UPDATE: {
+                // Handle
+                break;
+            }
+            default:
+                System.out.println("Roi kieu del gi cung chay vao day");
+                break;
+        }
+
+    }
+
+    public void show(String s) {
+        System.out.println(s);
     }
 }

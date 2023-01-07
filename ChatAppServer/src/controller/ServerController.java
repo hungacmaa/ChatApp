@@ -2,13 +2,14 @@ package controller;
 
 import model.RequestObject;
 import model.ResponseObject;
+import myserver.Server;
 import view.ServerHomeView;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 
 public class ServerController {
-    private ServerSocket serverSocket = null;
+    private Server server = null;
     private ServerHomeView view = null;
     private RequestObject request = null;
     private ResponseObject response = null;
@@ -17,13 +18,6 @@ public class ServerController {
     }
 
     public ServerController(ServerHomeView view, RequestObject request, ResponseObject response) {
-        if(this.serverSocket == null){
-            try{
-                this.serverSocket = new ServerSocket(6789);
-            } catch (IOException e) {
-                // handle server socket error
-            }
-        }
         if (this.view == null) this.view = view;
         if (this.request == null) this.request = request;
         if (this.response == null) this.response = response;
