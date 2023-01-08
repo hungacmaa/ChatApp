@@ -3,9 +3,7 @@ import model.RequestObject;
 import threadhandle.ReceiveThreadHandle;
 import view.ServerHomeView;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -26,14 +24,12 @@ public class Main {
             System.out.println("Da co ket noi tu client");
             in = new ObjectInputStream(client.getInputStream());
             out = new ObjectOutputStream(client.getOutputStream());
+
             ReceiveThreadHandle receiveThread = new ReceiveThreadHandle(in);
             receiveThread.start();
             while (true) {
                 msg = sc.nextLine();
                 if (msg.equals("exit")) {
-                    sendObject.setMessage("exit");
-                    sendObject.setData(null);
-                    out.writeObject(sendObject);
                     try {
                         if (in != null) in.close();
                         if (out != null) out.close();
@@ -43,8 +39,7 @@ public class Main {
 
                     }
                 } else {
-                    sendObject.setMessage("chat");
-                    sendObject.setData(msg);
+                    sendObject = new RequestObject("chat", msg);
                     out.writeObject(sendObject);
                     out.flush();
                 }
@@ -57,6 +52,7 @@ public class Main {
                 if (out != null) out.close();
                 if (client != null) client.close();
                 if (server != null) server.close();
+                System.out.println("Da ngat server !!!");
             } catch (Exception e) {
 
             }

@@ -36,9 +36,9 @@ public class ReceiveThreadHandle extends Thread {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+
         }
 
     }

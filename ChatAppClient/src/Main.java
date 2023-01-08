@@ -2,6 +2,8 @@ import model.RequestObject;
 import model.ResponseObject;
 import threadhandle.ReceiveThreadHandle;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -25,8 +27,7 @@ public class Main {
             receiveThread.start();
             while (true) {
                 msg = sc.nextLine();
-                sendObject.setMessage("chat");
-                sendObject.setData(msg);
+                sendObject = new RequestObject("chat", msg);
                 out.writeObject(sendObject);
                 out.flush();
             }
@@ -37,6 +38,7 @@ public class Main {
                 out.close();
                 in.close();
                 mySocket.close();
+                System.out.println("Da ngat ket noi toi server !!!");
             } catch (Exception e) {
             }
 
