@@ -6,6 +6,11 @@ public class RequestObject implements Serializable {
     private String action;
     private Object data;
 
+    public RequestObject(String action, Object data) {
+        this.action = action;
+        this.data = data;
+    }
+
     public String getAction() {
         return action;
     }

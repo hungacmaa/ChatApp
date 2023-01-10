@@ -12,4 +12,16 @@ public class ResponseObject implements Serializable {
         this.action = action;
         this.data = data;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public Object getData() {
+        return data;
+    }
 }
