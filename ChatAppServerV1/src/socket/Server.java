@@ -78,10 +78,10 @@ public class Server {
                     req = (RequestObject) in.readObject();
                     String action = req.getAction();
                     if(action.equals("chat")){
-                        ChatObject chatObject = (ChatObject) req.getData();
+                        ChatObject data = (ChatObject) req.getData();
                         // Xử lý khi có yêu cầu chat
-                        responseAll(new ResponseObject("ok", "chat", chatObject));
-                        System.out.println(chatObject.getUsername()+": "+chatObject.getMessage());
+                        responseAll(new ResponseObject("ok", "chat", data));
+                        System.out.println(data.getUsername()+": "+data.getMessage());
                     }
                     else if(action.equals("join")){
                         // Xử lý khi có yêu cầu join
