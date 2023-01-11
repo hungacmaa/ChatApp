@@ -26,32 +26,35 @@ public class Client {
     }
 
     public void startConnect(String IP, int port) {
-        System.out.println("Dang ket noi vao may chu " + IP + ":" + port);
+//        System.out.println("Dang ket noi vao may chu " + IP + ":" + port);
         try {
             clientSocket = new Socket(IP, port);
-            System.out.println("Da ket noi vao may chu !!!");
+            System.out.println("Da ket noi vao may chu " + IP + ":" + port + "!!!");
+            try {
+                out = new ObjectOutputStream(clientSocket.getOutputStream());
+                in = new ObjectInputStream(clientSocket.getInputStream());
+//            System.out.println("Da thiet lap luong vao ra !!!");
+
+                ResponseHandler responseHandler = new ResponseHandler();
+                responseHandler.start();
+
+                req = new RequestObject("join", new JoinObject(username));
+                request(req);
+
+                while (true) {
+                    msg = sc.nextLine();
+                    req = new RequestObject("chat", msg);
+                    request(req);
+                }
+
+            } catch (Exception e) {
+                System.out.println("Khong the khoi tao luong !!!");
+            }
         } catch (Exception e) {
             System.out.println("Khong the ket noi toi may chu !!!");
         }
-        try {
-            out = new ObjectOutputStream(clientSocket.getOutputStream());
-            in = new ObjectInputStream(clientSocket.getInputStream());
-            System.out.println("Da thiet lap luong vao ra !!!");
-        } catch (Exception e) {
-            System.out.println("Khong the khoi tao luong !!!");
-        }
 
-        ResponseHandler responseHandler = new ResponseHandler();
-        responseHandler.start();
 
-        req = new RequestObject("join", new JoinObject(username));
-        request(req);
-
-        while (true) {
-            msg = sc.nextLine();
-            req = new RequestObject("chat", msg);
-            request(req);
-        }
     }
 
     private class ResponseHandler extends Thread {

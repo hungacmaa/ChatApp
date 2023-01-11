@@ -1,6 +1,9 @@
 package model;
 
+import client.Client;
+
 import java.io.Serializable;
+import java.util.Scanner;
 
 public class JoinObject implements Serializable {
     private String username;
@@ -16,4 +19,6 @@ public class JoinObject implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
+
+
 }
