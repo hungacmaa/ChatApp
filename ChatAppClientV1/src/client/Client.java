@@ -53,11 +53,13 @@ public class Client {
         this.hostPort = port;
     }
 
-    public void startConnect(String IP, int port) {
+    public void startConnect() {
 //        System.out.println("Dang ket noi vao may chu " + IP + ":" + port);
         try {
-            clientSocket = new Socket(IP, port);
-            System.out.println("Da ket noi vao may chu " + IP + ":" + port + "!!!");
+            TimeWaiting t = new TimeWaiting("Dang ket noi den may chu");
+            t.start();
+            clientSocket = new Socket(hostIP, hostPort);
+            System.out.println("\nDa ket noi vao may chu " + hostIP + ":" + hostPort + "!!!");
             try {
                 out = new ObjectOutputStream(clientSocket.getOutputStream());
                 in = new ObjectInputStream(clientSocket.getInputStream());
@@ -71,8 +73,7 @@ public class Client {
 
                 while (true) {
                     msg = sc.nextLine();
-                    ChatObject chatObject = new ChatObject(username, msg);
-                    req = new RequestObject("chat", chatObject);
+                    req = new RequestObject("chat", msg);
                     request(req);
                 }
 
@@ -119,6 +120,29 @@ public class Client {
                     System.out.println("");
                 }
             }
+        }
+    }
+
+    private class TimeWaiting extends Thread{
+        private String notice;
+        public TimeWaiting(String notice){
+            this.notice = notice;
+        }
+
+        @Override
+        public void run() {
+            System.out.print(this.notice);
+            while(clientSocket == null){
+                try {
+                    System.out.print(".");
+                    Thread.sleep(1000);
+
+                }catch (Exception e){
+
+                }
+
+            }
+            return;
         }
     }
 

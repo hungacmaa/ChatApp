@@ -20,31 +20,29 @@ public class Server {
         listClient = new ArrayList<>();
     }
 
-    public void startConnection(int port){
-        try{
-            System.out.println("Da mo server tai port "+port+" !!!!!");
+    public void startConnection(int port) {
+        try {
+            System.out.println("Da mo server tai port " + port + " !!!!!");
             server = new ServerSocket(port);
-            while(true){
+            while (true) {
                 Socket clientSocket = server.accept();
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
                 listClient.add(clientHandler);
                 clientHandler.start();
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Co loi gi co khi tao doi tuong ServerSocket");
-        }
-        finally {
+        } finally {
             try {
                 server.close();
-            } catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
 
     }
 
-    private class ClientHandler extends Thread{
+    private class ClientHandler extends Thread {
         private String clientName;
         private Socket clientSocket;
         private ObjectInputStream in;
@@ -52,49 +50,48 @@ public class Server {
         private RequestObject req;
         private ResponseObject res;
 
-        public ClientHandler(Socket clientSocket){
+        public ClientHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
-            try{
+            try {
                 in = new ObjectInputStream(clientSocket.getInputStream());
                 out = new ObjectOutputStream(clientSocket.getOutputStream());
-            } catch (IOException e){
+            } catch (IOException e) {
 
             }
         }
 
-        public void response(ResponseObject res){
-            try{
+        public void response(ResponseObject res) {
+            try {
                 out.writeObject(res);
                 out.flush();
-            } catch (IOException e){
+            } catch (IOException e) {
 
             }
 
         }
+
         @Override
         public void run() {
-            try{
-                while(true){
+            try {
+                while (true) {
                     req = (RequestObject) in.readObject();
                     String action = req.getAction();
-                    if(action.equals("chat")){
-                        ChatObject data = (ChatObject) req.getData();
+                    if (action.equals("chat")) {
+                        String data = (String) req.getData();
                         // Xử lý khi có yêu cầu chat
-                        responseAll(new ResponseObject("ok", "chat", data));
-                        System.out.println(data.getUsername()+": "+data.getMessage());
-                    }
-                    else if(action.equals("join")){
+                        responseAll(new ResponseObject("ok", "chat", new ChatObject(this.clientName, data)));
+                        System.out.println(this.clientName + ": " + data);
+                    } else if (action.equals("join")) {
                         // Xử lý khi có yêu cầu join
                         JoinObject data = (JoinObject) req.getData();
                         this.clientName = data.getUsername();
-                        System.out.println(this.clientName+" da vao phong!!!");
+                        System.out.println(this.clientName + " da vao phong!!!");
                         responseAll(new ResponseObject("ok", "join", data));
-                    }
-                    else{
+                    } else {
                         // Xử lý trong các trường hợp còn lại
                     }
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
 
             }
 //            finally {
@@ -110,11 +107,12 @@ public class Server {
 
     }
 
-    private void responseAll(ResponseObject res){
-        for(ClientHandler client: listClient){
+    private void responseAll(ResponseObject res) {
+        for (ClientHandler client : listClient) {
             client.response(res);
         }
     }
 
-    private void response(ClientHandler client, ResponseObject res){}
+    private void response(ClientHandler client, ResponseObject res) {
+    }
 }
