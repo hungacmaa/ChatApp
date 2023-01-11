@@ -44,7 +44,7 @@ public class Client {
                 while (true) {
                     msg = sc.nextLine();
                     ChatObject chatObject = new ChatObject(username, msg);
-                    req = new RequestObject("chat", msg);
+                    req = new RequestObject("chat", chatObject);
                     request(req);
                 }
 
@@ -54,7 +54,6 @@ public class Client {
         } catch (Exception e) {
             System.out.println("Khong the ket noi toi may chu !!!");
         }
-
 
     }
 
@@ -81,14 +80,15 @@ public class Client {
                     }
                 }
             } catch (Exception e) {
-
+                System.out.println("co loi gi do");
             } finally {
                 try {
                     out.close();
                     in.close();
                     clientSocket.close();
+                    System.out.println("Dong ket noi den may chu");
                 } catch (Exception e) {
-                    System.out.println("Co loi khi dong luong");
+                    System.out.println("");
                 }
             }
         }

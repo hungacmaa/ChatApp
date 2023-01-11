@@ -96,15 +96,16 @@ public class Server {
                 }
             } catch (Exception e){
 
-            } finally {
-                try{
-                    in.close();
-                    out.close();
-                    clientSocket.close();
-                } catch (Exception e){
-
-                }
             }
+//            finally {
+//                try{
+//                    in.close();
+//                    out.close();
+//                    clientSocket.close();
+//                } catch (Exception e){
+//
+//                }
+//            }
         }
 
     }
