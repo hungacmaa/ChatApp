@@ -71,17 +71,21 @@ public class Client {
                 req = new RequestObject("join", new JoinObject(username));
                 request(req);
 
-                while (true) {
+                while (!clientSocket.isClosed()) {
                     msg = sc.nextLine();
-                    req = new RequestObject("chat", msg);
-                    request(req);
+                    if (!clientSocket.isClosed()) {
+                        req = new RequestObject("chat", msg);
+                        request(req);
+                    }
+
                 }
 
             } catch (Exception e) {
-                System.out.println("Khong the khoi tao luong !!!");
+                System.out.println("\nKhong the khoi tao luong !!!");
             }
         } catch (Exception e) {
-            System.out.println("Khong the ket noi toi may chu !!!");
+            clientSocket = new Socket();
+            System.out.println("\nKhong the ket noi toi may chu !!!");
         }
 
     }
@@ -109,13 +113,13 @@ public class Client {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("co loi gi do");
+                System.out.println("May chu da dong !!!");
             } finally {
                 try {
                     out.close();
                     in.close();
                     clientSocket.close();
-                    System.out.println("Dong ket noi den may chu");
+                    System.out.println("Nhap gi do de tat chuong trinh");
                 } catch (Exception e) {
                     System.out.println("");
                 }
@@ -123,21 +127,22 @@ public class Client {
         }
     }
 
-    private class TimeWaiting extends Thread{
+    private class TimeWaiting extends Thread {
         private String notice;
-        public TimeWaiting(String notice){
+
+        public TimeWaiting(String notice) {
             this.notice = notice;
         }
 
         @Override
         public void run() {
             System.out.print(this.notice);
-            while(clientSocket == null){
+            while (clientSocket == null) {
                 try {
                     System.out.print(".");
                     Thread.sleep(1000);
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 

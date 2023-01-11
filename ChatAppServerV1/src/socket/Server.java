@@ -1,9 +1,6 @@
 package socket;
 
-import model.ChatObject;
-import model.JoinObject;
-import model.RequestObject;
-import model.ResponseObject;
+import model.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,6 +12,7 @@ import java.util.ArrayList;
 public class Server {
     private ServerSocket server;
     private ArrayList<ClientHandler> listClient;
+
 
     public Server() {
         listClient = new ArrayList<>();
@@ -85,24 +83,26 @@ public class Server {
                         // Xử lý khi có yêu cầu join
                         JoinObject data = (JoinObject) req.getData();
                         this.clientName = data.getUsername();
-                        System.out.println(this.clientName + " da vao phong!!!");
+                        System.out.println(this.clientName + " da vao phong !!!");
                         responseAll(new ResponseObject("ok", "join", data));
                     } else {
                         // Xử lý trong các trường hợp còn lại
                     }
                 }
             } catch (Exception e) {
+                System.out.println(this.clientName + " da thoat khoi phong !!!");
+                listClient.remove(this);
+                res = new ResponseObject("ok","out", new OutObject(this.clientName));
+                responseAll(res);
+            } finally {
+                try {
+                    in.close();
+                    out.close();
+                    clientSocket.close();
+                } catch (Exception e) {
 
+                }
             }
-//            finally {
-//                try{
-//                    in.close();
-//                    out.close();
-//                    clientSocket.close();
-//                } catch (Exception e){
-//
-//                }
-//            }
         }
 
     }
