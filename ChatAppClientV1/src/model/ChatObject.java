@@ -6,6 +6,11 @@ public class ChatObject implements Serializable{
     private String username;
     private String message;
 
+    public ChatObject(String username, String message) {
+        this.username = username;
+        this.message = message;
+    }
+
     public String getUsername() {
         return username;
     }

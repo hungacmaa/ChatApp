@@ -43,6 +43,7 @@ public class Client {
 
                 while (true) {
                     msg = sc.nextLine();
+                    ChatObject chatObject = new ChatObject(username, msg);
                     req = new RequestObject("chat", msg);
                     request(req);
                 }
