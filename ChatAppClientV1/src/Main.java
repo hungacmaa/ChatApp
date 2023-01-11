@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Client client = new Client("Hung");
-        client.startConnect("localhost", 6789);
+        Client client = new Client();
+        client.getInfo();
     }
 }

@@ -12,6 +12,8 @@ import java.util.Scanner;
 
 public class Client {
     private String username;
+    private String hostIP;
+    private int hostPort;
     private Socket clientSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -20,9 +22,35 @@ public class Client {
     private Scanner sc;
     private String msg = "";
 
+    public Client() {
+        sc = new Scanner(System.in);
+    }
+
     public Client(String username) {
         this.username = username;
         sc = new Scanner(System.in);
+    }
+
+    public void getInfo() {
+        String userName = "";
+        String serverIP = "";
+        int port = 0;
+        while (userName.isEmpty() || serverIP.isEmpty() || port == 0) {
+            System.out.println("Vui long nhap dung dinh dang !!!");
+            System.out.print("Ten hien thi: ");
+            userName = sc.nextLine().trim();
+            System.out.print("Server IP: ");
+            serverIP = sc.nextLine().trim();
+            System.out.print("Port: ");
+            try {
+                port = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                port = 0;
+            }
+        }
+        this.username = userName;
+        this.hostIP = serverIP;
+        this.hostPort = port;
     }
 
     public void startConnect(String IP, int port) {
