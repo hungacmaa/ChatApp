@@ -1,9 +1,6 @@
 package client;
 
-import model.ChatObject;
-import model.JoinObject;
-import model.RequestObject;
-import model.ResponseObject;
+import model.*;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -107,6 +104,10 @@ public class Client {
                             // Xử lý khi nhận về response join
                             JoinObject joinObject = (JoinObject) res.getData();
                             System.out.println(joinObject.getUsername() + " da vao phong !!!");
+                        } else if (action.equals("out")) {
+                            // Xử lý khi nhận về response out
+                            OutObject outObject = (OutObject) res.getData();
+                            System.out.println(outObject.getUsername() + " da thoat khoi phong @@@");
                         } else {
                             // Xử lý khi nhận về response khác
                         }
